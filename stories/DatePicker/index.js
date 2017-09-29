@@ -30,7 +30,7 @@ storiesOf('Core', module)
       <div>
         <Markdown source={Readme}/>
 
-        <InteractiveCodeExample title="Interactive <DatePicker/>" autoExpand={false}>
+        <InteractiveCodeExample title="Customize <DatePicker/>" autoExpand={false}>
           <ExampleInteractive/>
         </InteractiveCodeExample>
 

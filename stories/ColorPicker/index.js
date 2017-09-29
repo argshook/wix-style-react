@@ -6,16 +6,15 @@ import AutoDocs from '../utils/Components/AutoDocs';
 import TabbedView from '../utils/Components/TabbedView';
 import ColorPicker from '!raw-loader!../../src/ColorPicker/color-picker';
 
-import ExampleDefault from './ExampleDefault';
+import ExampleInteractive from './ExampleInteractive';
 
 storiesOf('Core', module)
-  .add('Color Picker', () => (
+  .add('ColorPicker', () => (
     <TabbedView tabs={['Example', 'API']}>
-      <div>
-        <InteractiveCodeExample title="Customize <ColorPicker/>" autoExpand={false}>
-          <ExampleDefault/>
-        </InteractiveCodeExample>
-      </div>
+      <InteractiveCodeExample title="Customize <ColorPicker/>" autoExpand={false}>
+        <ExampleInteractive/>
+      </InteractiveCodeExample>
+
       <AutoDocs source={ColorPicker}/>
     </TabbedView>
   ));
