@@ -65,6 +65,10 @@ export default class DatePicker extends WixComponent {
 
     /** Display a selectable yearDropdown */
     showYearDropdown: PropTypes.bool,
+
+    /** Display a selectable monthDropdown */
+    showMonthDropdown: PropTypes.bool,
+
     style: PropTypes.object,
 
     /** Theme of the Input */
