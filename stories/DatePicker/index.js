@@ -7,9 +7,10 @@ import TabbedView from '../utils/Components/TabbedView';
 import CodeExample from '../utils/Components/CodeExample';
 import Readme from '../../src/DatePicker/README.md';
 import ReadmeTestkit from '../../src/DatePicker/README.TESTKIT.md';
+import moment from 'moment';
 
-import InteractiveCodeExample from '../utils/Components/InteractiveCodeExample';
-import ExampleInteractive from './ExampleInteractive';
+import DatePicker from 'wix-style-react/DatePicker';
+import AutoExample from '../utils/Components/AutoExample';
 
 import ExampleControlled from './ExampleControlled';
 import ExampleControlledRaw from '!raw-loader!./ExampleControlled';
@@ -30,10 +31,16 @@ storiesOf('Core', module)
       <div>
         <Markdown source={Readme}/>
 
-        <InteractiveCodeExample title="Customize <DatePicker/>" autoExpand={false}>
-          <ExampleInteractive/>
-        </InteractiveCodeExample>
-
+        <AutoExample
+          component={DatePicker}
+          source={DatePickerSource}
+          defaultProps={{
+            onChange: value => console.log('DatePicker value is now ', value.toString()),
+            dateFormat: 'YYYY/MM/DD',
+            dataHook: 'storybook-datepicker',
+            value: moment(moment.now())
+          }}
+          />
 
         <CodeExample title="Controlled input" code={ExampleControlledRaw}>
           <ExampleControlled/>
