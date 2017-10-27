@@ -19,6 +19,7 @@
 | fixedFooter | node | - | - | A fixed footer to the list |
 | dropdownWidth | string | - | - | An optional custom width for the dropdown |
 | dropdownOffsetLeft | string | 0 | - | Am optional horizontal offset to the dropdown |
+| openOnFocus | bool | true | - | should open dropdown on focus |
 | ***All of the Input's and DropdownLayout Props are also available for this component*** | | | | |
 
 
