@@ -146,9 +146,9 @@ const runInputWithOptionsTest = driverFactory => {
       });
     });
 
-    it('should show DropdownLayout on any key press', () => {
+    it('should show DropdownLayout on enter key press', () => {
       const {driver, dropdownLayoutDriver} = createDriver(<InputWithOptions options={options}/>);
-      driver.pressAnyKey();
+      driver.pressEnterKey();
       expect(dropdownLayoutDriver.isShown()).toBeTruthy();
     });
 
@@ -215,7 +215,7 @@ const runInputWithOptionsTest = driverFactory => {
       expect(onManuallyInput).toBeCalledWith('my text', undefined);
     });
 
-    it('should blur on tab key press', () => {
+    it('should select active option on tab key press', () => {
       const onManuallyInput = jest.fn();
       const {driver, inputDriver, dropdownLayoutDriver} = createDriver(<InputWithOptions options={options} onManuallyInput={onManuallyInput}/>);
       inputDriver.focus();
@@ -223,7 +223,7 @@ const runInputWithOptionsTest = driverFactory => {
       driver.pressDownKey();
       expect(inputDriver.isFocus()).toBe(true);
       driver.pressTabKey();
-      expect(inputDriver.isFocus()).toBe(false);
+      expect(dropdownLayoutDriver.isOptionSelected(0)).toBe(true);
       expect(dropdownLayoutDriver.isShown()).toBe(false);
     });
 
