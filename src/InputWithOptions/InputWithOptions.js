@@ -4,6 +4,7 @@ import WixComponent from '../BaseComponents/WixComponent';
 import Input from '../Input';
 import omit from 'omit';
 import DropdownLayout from '../DropdownLayout/DropdownLayout';
+import Highlighter from '../Highlighter/Highlighter';
 
 class InputWithOptions extends WixComponent {
 
@@ -16,7 +17,7 @@ class InputWithOptions extends WixComponent {
   constructor(props) {
     super(props);
     this.state = {
-      inputValue: '',
+      inputValue: props.value || '',
       showOptions: false,
       lastOptionsShow: 0,
       isEditing: false
@@ -45,6 +46,13 @@ class InputWithOptions extends WixComponent {
     }
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    if (!this.props.showOptionsIfEmptyInput &&
+        ((!prevProps.value && this.props.value) || (!prevState.inputValue && this.state.inputValue))) {
+      this.showOptions();
+    }
+  }
+
   onCompositionChange(isComposing) {
     this.setState({isComposing});
   }
@@ -70,20 +78,40 @@ class InputWithOptions extends WixComponent {
     });
   }
 
+  _processOptions(options) {
+    return !this.props.highlight ? options : (
+      options.map(option => {
+        return {
+          ...option,
+          value: (
+            <Highlighter match={this.state.inputValue} dataHook={`highlighter-${option.id}`}>
+              {option.value}
+            </Highlighter>
+          )
+        };
+      })
+    );
+  }
+
   _renderDropdownLayout() {
     const dropdownProps = Object.assign(omit(Object.keys(Input.propTypes).concat(['dataHook']), this.props), this.dropdownAdditionalProps());
     const customStyle = {marginLeft: this.props.dropdownOffsetLeft};
+
     if (this.props.dropdownWidth) {
       customStyle.width = this.props.dropdownWidth;
     }
+
+    const isDropdownLayoutVisible = this.state.showOptions &&
+      (this.props.showOptionsIfEmptyInput || this.state.inputValue.length > 0);
 
     return (
       <div className={this.dropdownClasses()} style={customStyle}>
         <DropdownLayout
           ref={dropdownLayout => this.dropdownLayout = dropdownLayout}
           {...dropdownProps}
+          options={this._processOptions(dropdownProps.options)}
           theme={this.props.theme}
-          visible={this.state.showOptions}
+          visible={isDropdownLayoutVisible}
           onClose={this.hideOptions}
           onSelect={this._onSelect}
           isComposing={this.state.isComposing}
@@ -154,7 +182,7 @@ class InputWithOptions extends WixComponent {
     if (isSelectedOption) {
       this.setState({showOptions: false});
     } else if (onSelect) {
-      onSelect(option);
+      onSelect(this.props.highlight ? this.props.options.find(opt => opt.id === option.id) : option);
     }
   }
 
@@ -237,7 +265,8 @@ InputWithOptions.defaultProps = {
   inputElement: <Input/>,
   valueParser: option => option.value,
   dropdownWidth: null,
-  dropdownOffsetLeft: '0'
+  dropdownOffsetLeft: '0',
+  showOptionsIfEmptyInput: true
 };
 
 InputWithOptions.propTypes = {
@@ -248,7 +277,10 @@ InputWithOptions.propTypes = {
   onManuallyInput: PropTypes.func,
   valueParser: PropTypes.func,
   dropdownWidth: PropTypes.string,
-  dropdownOffsetLeft: PropTypes.string
+  dropdownOffsetLeft: PropTypes.string,
+  /** Controls whether to show options if input is empty */
+  showOptionsIfEmptyInput: PropTypes.bool,
+  highlight: PropTypes.bool
 };
 
 InputWithOptions.displayName = 'InputWithOptions';

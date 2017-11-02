@@ -185,3 +185,9 @@ export const modalSelectorTestkitFactory = testkitFactoryCreator(modalSelectorDr
 
 import iconWithOptionsDriverFactory from '../src/IconWithOptions/IconWithOptions.driver';
 export const iconWithOptionsTestkitFactory = testkitFactoryCreator(iconWithOptionsDriverFactory);
+
+import searchDriverFactory from '../src/Search/Search.driver';
+export const searchTestkitFactory = testkitFactoryCreator(searchDriverFactory);
+
+import highlighterDriverFactory from '../src/Highlighter/Highlighter.driver';
+export const highlighterTestkitFactory = testkitFactoryCreator(highlighterDriverFactory);

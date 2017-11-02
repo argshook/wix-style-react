@@ -95,3 +95,9 @@ export const editableSelectorTestkitFactory = protractorTestkitFactoryCreator(ed
 
 import iconWithOptionsDriverFactory from '../src/IconWithOptions/IconWithOptions.protractor.driver';
 export const iconWithOptionsTestkitFactory = protractorTestkitFactoryCreator(iconWithOptionsDriverFactory);
+
+import searchDriverFactory from '../src/Search/Search.protractor.driver';
+export const searchTestkitFactory = protractorTestkitFactoryCreator(searchDriverFactory);
+
+import highlighterDriverFactory from '../src/Highlighter/Highlighter.protractor.driver';
+export const highlighterTestkitFactory = protractorTestkitFactoryCreator(highlighterDriverFactory);

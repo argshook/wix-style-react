@@ -25,9 +25,18 @@ const inputWithOptionsDriverFactory = ({element, wrapper, component}) => {
     setProps: props => {
       const ClonedWithProps = React.cloneElement(component, Object.assign({}, component.props, props), ...(component.props.children || []));
       ReactDOM.render(<div ref={r => element = r}>{ClonedWithProps}</div>, wrapper);
+    },
+    isOptionWrappedToHighlighter: optionId => {
+      const {element} = dropdownLayoutDriver.optionById(optionId);
+      return !!element().querySelector(`[data-hook=highlighter-${optionId}]`);
     }
   };
-  return {driver, inputDriver, dropdownLayoutDriver};
+  return {
+    exists: () => driver.exists(),
+    driver,
+    inputDriver,
+    dropdownLayoutDriver
+  };
 };
 
 export default inputWithOptionsDriverFactory;

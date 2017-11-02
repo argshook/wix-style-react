@@ -15,12 +15,11 @@ import UsageWithoutYoshiReadme from '../../docs/usage-without-yoshi.md';
 import AutoExampleSource from '!raw-loader!../utils/Components/AutoExample';
 import StorySource from '!raw-loader!../utils/Components/Story';
 
-storiesOf('Introduction', {})
+storiesOf('Introduction', module)
   .add('Getting started', () => <Markdown source={Readme}/>)
   .add('Testing', () => <Markdown source={TestsReadme}/>)
   .add('Contribution', () => <Markdown source={Contribution}/>)
   .add('TPA', () => <Markdown source={TPA}/>)
-  .add('Adding Story', () => <Markdown source={AddingStory}/>)
   .add('Usage Without Yoshi', () => <Markdown source={UsageWithoutYoshiReadme}/>)
   .add('Documenting components', () =>
     <TabbedView tabs={['Adding a Story', 'story( )', 'AutoDocs', 'AutoExample']}>

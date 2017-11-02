@@ -1,14 +1,17 @@
 import React from 'react';
+import sinon from 'sinon';
+
 import inputDriverFactory from './Input.driver';
 import Input from '.';
-import sinon from 'sinon';
 import {createDriverFactory} from '../test-common';
 import {inputTestkitFactory, tooltipTestkitFactory} from '../../testkit';
 import {inputTestkitFactory as enzymeInputTestkitFactory} from '../../testkit/enzyme';
 import {isTestkitExists, isEnzymeTestkitExists} from '../../testkit/test-common';
+import {makeControlled} from '../../test/utils/utils';
 
 describe('Input', () => {
   const createDriver = createDriverFactory(inputDriverFactory);
+  const ControlledInput = makeControlled(Input);
 
   describe('test tooltip', () => {
     const resolveIn = timeout =>
@@ -376,26 +379,125 @@ describe('Input', () => {
     });
   });
 
-  describe('onClear attribute', () => {
-    it('should not be displayed when text is empty', () => {
-      const onClear = () => {};
-      const onChange = () => {};
-      const driver = createDriver(<Input onClear={onClear} value="" onChange={onChange}/>);
-      expect(driver.hasClearButton()).toBeFalsy();
+  describe('clearButton attribute', () => {
+    it('should be displayed when input text is not empty', () => {
+      const driver = createDriver(
+        <Input
+          value="some value"
+          clearButton
+          />
+      );
+      expect(driver.hasClearButton()).toBe(true);
     });
 
-    it('should display a X when text is not null, and be clickable', () => {
-      const onClear = sinon.spy();
-      const onChange = () => {};
-      const driver = createDriver(<Input onClear={onClear} value={'some value'} onChange={onChange}/>);
-      expect(driver.hasClearButton()).toBeTruthy();
+    // TODO
+    it.skip('should be displayed when using uncontrolled component with defaultValue', () => {
+      const driver = createDriver(
+        <Input
+          defaultValue="some value"
+          clearButton
+          />
+      );
+      expect(driver.hasClearButton()).toBe(true);
+    });
+
+    it('should not be displayed when input text is empty', () => {
+      const driver = createDriver(
+        <Input
+          value=""
+          clearButton
+          />
+      );
+      expect(driver.hasClearButton()).toBe(false);
+    });
+
+    // TODO
+    it.skip('should be displayed after entering text into empty uncontrolled input', () => {
+      const driver = createDriver(
+        <Input
+          clearButton
+          />
+      );
+      driver.enterText('some value');
+      expect(driver.hasClearButton()).toBe(true);
+    });
+
+    // TODO
+    it.skip('should clear input when using uncontrolled component', () => {
+      const driver = createDriver(
+        <Input
+          clearButton
+          />
+      );
+      driver.enterText('some value');
       driver.clickClear();
-      expect(onClear.calledOnce).toBeTruthy();
+      expect(driver.getValue()).toBe('');
+      expect(driver.isFocus()).toBe(true);
     });
 
-    it('should display a left icon when one is passed', () => {
-      const driver = createDriver(<Input iconLeft={<div/>}/>);
-      expect(driver.hasIconLeft()).toBeTruthy();
+    // TODO
+    it.skip('should be hidden after default value was overridden with some input', () => {
+      const driver = createDriver(
+        <Input
+          defaultValue="some default value"
+          clearButton
+          />
+      );
+      expect(driver.hasClearButton()).toBe(true);
+      driver.clearText();
+      driver.enterText('new value');
+      expect(driver.hasClearButton()).toBe(false);
+    });
+
+    it('should clear input and focus it', () => {
+      const driver = createDriver(
+        <ControlledInput
+          clearButton
+          value="some value"
+          />
+      );
+      driver.clickClear();
+      expect(driver.getValue()).toBe('');
+      expect(driver.isFocus()).toBe(true);
+    });
+
+    it('should trigger onChange on clearing as if input just emptied', () => {
+      const onChange = jest.fn();
+      const driver = createDriver(
+        <Input
+          onChange={onChange}
+          value="some value"
+          clearButton
+          />
+      );
+      driver.clickClear();
+      expect(onChange).toBeCalled();
+      expect(onChange.mock.calls[0][0].target.value).toBe('');
+    });
+  });
+
+  describe('onClear attribute', () => {
+    it('should display clear-button when input text is not empty', () => {
+      const driver = createDriver(
+        <Input
+          value="some value"
+          onClear={() => null}
+          />
+      );
+      expect(driver.hasClearButton()).toBe(true);
+    });
+
+    it('should invoke callback', () => {
+      const onClear = sinon.spy();
+      const driver = createDriver(
+        <Input
+          onClear={onClear}
+          value="some value"
+          />
+      );
+      expect(driver.hasClearButton()).toBe(true);
+      driver.clickClear();
+      expect(onClear.calledOnce).toBe(true);
     });
   });
 
