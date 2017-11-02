@@ -43,11 +43,15 @@ class DropdownLayout extends WixComponent {
     }
   }
 
-  _onSelect(index) {
-    const {options, onSelect, selectedId} = this.props;
-    this.setState({selectedId: options[index] ? options[index].id : undefined});
-    options[index] && onSelect && onSelect(options[index], options[index].id === selectedId);
-    return !!onSelect && options[index];
+  _onSelect(index, id) {
+    const selectedOption = this.props.options.find(option => option.id === id) || this.props.options[index];
+
+    if (selectedOption) {
+      this.setState({selectedId: selectedOption.id});
+      this.props.onSelect(selectedOption, selectedOption.id === this.props.selectedId);
+
+      return selectedOption;
+    }
   }
 
   _onMouseEnter(index) {
@@ -210,7 +214,7 @@ class DropdownLayout extends WixComponent {
     return (
       <div
         className={optionClassName}
-        onClick={!disabled ? () => this._onSelect(idx) : null}
+        onClick={!disabled ? () => this._onSelect(idx, option.id) : null}
         key={idx}
         onMouseEnter={() => this._onMouseEnter(idx)}
         onMouseLeave={this._onMouseLeave}
@@ -302,7 +306,8 @@ DropdownLayout.defaultProps = {
   selectedId: NOT_HOVERED_INDEX,
   maxHeightPixels: 260,
   closeOnSelect: true,
-  itemHeight: 'small'
+  itemHeight: 'small',
+  onSelect: () => {}
 };
 
 DropdownLayout.NONE_SELECTED_ID = NOT_HOVERED_INDEX;

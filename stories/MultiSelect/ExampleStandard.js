@@ -32,9 +32,8 @@ class ExampleStandard extends React.Component {
 
   getValue = option => typeof option.value === 'string' ? option.value : option.value.props.children[0].props.children;
 
-  handleOnSelect = tags => Array.isArray(tags) ?
-    this.setState({tags: [...this.state.tags, ...tags]}) :
-    this.setState({tags: [...this.state.tags, tags]});
+  handleOnSelect = tags =>
+    this.setState({tags: [...this.state.tags, ...tags]});
 
   handleOnRemoveTag = tagId => this.setState({tags: this.state.tags.filter(currTag => currTag.id !== tagId)});
 
