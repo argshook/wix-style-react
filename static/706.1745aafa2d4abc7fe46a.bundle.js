@@ -1,0 +1,1 @@
+webpackJsonp([706],{3880:function(module,exports){module.exports=".root {\n  display: flex;\n  align-items: center;\n}"}});

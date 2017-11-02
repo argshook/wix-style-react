@@ -1,0 +1,1 @@
+webpackJsonp([682],{3904:function(module,exports){module.exports="@import '../common';\n\n.leftIcon {\n    display: inline-flex;\n    width: 17px;\n    margin: 0 6px;\n\n    align-items: center;\n\n    color: $B10;\n}"}});

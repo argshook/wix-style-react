@@ -1,0 +1,1 @@
+webpackJsonp([473],{1552:function(module,exports){module.exports="const RangeInputWithLabelCompositeDriverFactory = component => ({\n  getLabel: () => component.find('label'),\n  element: () => component\n});\n\nexport default RangeInputWithLabelCompositeDriverFactory;\n"}});

@@ -1,0 +1,1 @@
+webpackJsonp([73],{481:function(module,exports){module.exports="export {default} from './DataTable.js';\n"}});

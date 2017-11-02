@@ -1,0 +1,1 @@
+webpackJsonp([47],{507:function(module,exports){module.exports="export {default} from './Footer.js';\n"}});

@@ -1,0 +1,1 @@
+webpackJsonp([19],{535:function(module,exports){module.exports="export {default} from './Badge';\n"}});

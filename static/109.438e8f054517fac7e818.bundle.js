@@ -1,0 +1,1 @@
+webpackJsonp([109],{1916:function(module,exports){module.exports="export const convertFromUxLangToCss = (ux = '') =>\n  ux.toLowerCase().replace('.', '_');\n\nexport const convertFromCssToUxLang = (css = '') =>\n  css.toUpperCase().replace('_', '.');\n"}});
