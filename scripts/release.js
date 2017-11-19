@@ -5,6 +5,7 @@ if (!process.env.IS_BUILD_AGENT) {
   return process.exit(0);
 }
 
+const promisify = require('./tools/promisify');
 const path = require('path');
 const semver = require('semver');
 const exec = promisify(require('child_process').exec);
@@ -54,19 +55,6 @@ writeFile(
     console.error('ERROR: Unable to publish', error);
     process.exit(1);
   });
-
-
-
-// promisify : Function -> List arguments -> Promise
-function promisify(fn) {
-  return (...args) =>
-    new Promise((resolve, reject) =>
-      fn(
-        ...args,
-        (err, payload) => err ? reject(err) : resolve(payload)
-      )
-    );
-}
 
 function stringify(data) {
   return JSON.stringify(data, null, 2);

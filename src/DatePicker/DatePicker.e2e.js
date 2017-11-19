@@ -7,12 +7,7 @@ describe('DatePicker', () => {
   const autoExampleDriver = autoExampleTestkitFactory({dataHook: 'auto-example'});
   const {inputDriver, calendarDriver} = datePickerTestkitFactory({dataHook: 'storybook-datepicker'});
 
-  beforeEach(() => {
-    browser.get(storyUrl);
-  });
-
-  eyes.it('should not open calendar when disabled', () => {
-    autoExampleDriver.get.toggle('storybook-DatePicker-disabled-toggle').click();
+  eyes.fit('should not open calendar when disabled', () => {
     inputDriver.click();
 
     expect(calendarDriver.exists()).toBe(false);
